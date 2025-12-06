@@ -1,0 +1,35 @@
+name: Check Shoe Stock
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Runs every 30 minutes
+  workflow_dispatch:        # Allows you to test it manually
+
+jobs:
+  check-stock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          playwright install chromium
+
+      - name: Run Stock Checker
+        run: python main.py
+
+      # This step saves the screenshot so you can see it in the GitHub "Artifacts" tab
+      - name: Upload Proof Screenshot
+        if: always() 
+        uses: actions/upload-artifact@v4
+        with:
+          name: proof-screenshot
+          path: proof.png
+          retention-days: 5
