@@ -78,4 +78,22 @@ def check_stock():
     if is_in_stock:
         print("!!! IN STOCK - TRIGGERING ALERT !!!")
         print(f"Go buy it here: {url}")
-        #
+        # Exit with error code 1 to force GitHub Actions to mark the run as "Failed"
+        # This triggers the email notification to you.
+        sys.exit(1) 
+    else:
+        print(f"Verified: Size {target_size_label} (ID {target_id}) is OUT of stock.")
+        
+        # Verification: Print ALL available sizes so you can confirm the data is real
+        in_stock_labels = []
+        for option in size_attribute['options']:
+            if option['id'] in salable_items:
+                in_stock_labels.append(option['label'])
+        
+        if in_stock_labels:
+            print(f"Currently available sizes ({len(in_stock_labels)} total): {', '.join(in_stock_labels)}")
+        else:
+            print("Stock Status: NO SIZES are currently available.")
+
+if __name__ == "__main__":
+    check_stock()
