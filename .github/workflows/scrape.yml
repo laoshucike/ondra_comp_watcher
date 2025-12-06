@@ -23,12 +23,3 @@ jobs:
 
       - name: Run Stock Checker
         run: python main.py
-
-      # This step saves the screenshot so you can see it in the GitHub "Artifacts" tab
-      - name: Upload Proof Screenshot
-        if: always() 
-        uses: actions/upload-artifact@v4
-        with:
-          name: proof-screenshot
-          path: proof.png
-          retention-days: 5
