@@ -19,8 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install playwright
-          playwright install chromium
+          pip install requests beautifulsoup4
 
       - name: Run Stock Checker
         run: python main.py
